@@ -69,7 +69,11 @@ if response.data:
                 "consumed_calories": updated_consumed
             }).eq("date", str(date)).execute()
             st.success(f"{new_calories} kcal を記録しました！")
-            remaining_calories_display.write(f"残りの消費可能カロリー: {updated_remaining} kcal")
+            remaining_calories_display.metric(
+                label="残りの消費可能カロリー",
+                value=f"{updated_remaining} kcal",
+                delta=-consumed_calories
+            )
         else:
             st.error("有効な数値を入力してください。")
 else:

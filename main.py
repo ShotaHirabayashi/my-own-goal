@@ -11,7 +11,7 @@ st.set_page_config(
     page_icon="🍎",
     layout="centered"
 )
-st.markdown("<h1 style='font-size:24px;'>🍎 カロリー消費トラッカー</h1>", unsafe_allow_html=True)
+st.markdown("<div style='padding-top: 2rem;'><h1 style='font-size:24px; margin-bottom: 0;'>🍎 カロリー消費トラッカー</h1></div>", unsafe_allow_html=True)
 
 # Add styling for a cleaner design
 st.markdown(
@@ -21,11 +21,15 @@ st.markdown(
         background-color: #FF6347;
         color: white;
         font-size: 16px;
-        padding: 10px;
+        padding: 8px;
         border-radius: 8px;
     }
     .stButton>button:hover {
         background-color: #FF4500;
+    }
+    .block-container {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
     }
     </style>
     """,

@@ -2,39 +2,16 @@ import streamlit as st
 import datetime
 from st_supabase_connection import SupabaseConnection
 
-# Connect to Supabase
-conn = st.connection("supabase", type=SupabaseConnection)
-
 # Define the application
 st.set_page_config(
     page_title="カロリー消費トラッカー",
     page_icon="🍎",
     layout="centered"
 )
-st.markdown("<div style='padding-top: 2rem;'><h1 style='font-size:24px; margin-bottom: 0;'>🍎 カロリー消費トラッカー</h1></div>", unsafe_allow_html=True)
 
-# Add styling for a cleaner design
-st.markdown(
-    """
-    <style>
-    .stButton>button {
-        background-color: #FF6347;
-        color: white;
-        font-size: 16px;
-        padding: 8px;
-        border-radius: 8px;
-    }
-    .stButton>button:hover {
-        background-color: #FF4500;
-    }
-    .block-container {
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+conn = st.connection("supabase", type=SupabaseConnection)
+
+st.markdown("<div style='padding-top: 2rem;'><h1 style='font-size:24px; margin-bottom: 0;'>🍎 カロリー消費トラッカー</h1></div>", unsafe_allow_html=True)
 
 # Select date
 date = st.date_input("日付を選んでください", datetime.date.today())
@@ -69,11 +46,7 @@ if response.data:
                 "consumed_calories": updated_consumed
             }).eq("date", str(date)).execute()
             st.success(f"{new_calories} kcal を記録しました！")
-            remaining_calories_display.metric(
-                label="残りの消費可能カロリー",
-                value=f"{updated_remaining} kcal",
-                delta=-consumed_calories
-            )
+            remaining_calories_display.write(f"残りの消費可能カロリー: {updated_remaining} kcal")
         else:
             st.error("有効な数値を入力してください。")
 else:
@@ -83,4 +56,4 @@ else:
         "consumed_calories": 2400,
         "date": str(date)
     }).execute()
-    st.success("新しい日付のデータが作成されました。再度確認してください。")
+    st.success("新しい日付のデータが作成されました。リロードしてください。")
